@@ -1,7 +1,7 @@
 // Fallback Default Data in case server API is not available (Static Hosting)
 const DEFAULT_CONFIG = {
   "businessName": "Antó-Jalos",
-  "whatsappPhone": "524962900038",
+  "whatsappPhone": "524741342246",
   "deliveryCost": "cotizar",
   "currency": "MXN",
   "schedule": {
