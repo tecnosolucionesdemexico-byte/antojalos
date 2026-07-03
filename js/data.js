@@ -1,0 +1,830 @@
+// Fallback Default Data in case server API is not available (Static Hosting)
+const DEFAULT_CONFIG = {
+  "businessName": "Antó-Jalos",
+  "whatsappPhone": "524741342246",
+  "deliveryCost": "cotizar",
+  "currency": "MXN",
+  "schedule": {
+    "alwaysOpen": true,
+    "days": {
+      "monday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "tuesday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "wednesday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "thursday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "friday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "saturday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "sunday": { "enabled": true, "start": "18:00", "end": "23:30" }
+    }
+  }
+};
+
+const DEFAULT_MENU_ITEMS = [
+  {
+    "id": "hamburguesa_clasica",
+    "name": "Hamburguesa Clásica",
+    "description": "Carne + jitomate + queso amarillo + lechuga + cebolla + chiles.",
+    "price": 60,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 25 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hamburguesa_pollo",
+    "name": "Hamburguesa de Pollo a la plancha",
+    "description": "Fajitas de pollo a la plancha + queso blanco + lechuga + cebolla + chiles + jitomate.",
+    "price": 75,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 20 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hamburguesa_mexicana",
+    "name": "Hamburguesa A la Mexicana",
+    "description": "Carne + tocino + salchicha + jamón + jitomate + queso amarillo + lechuga + cebolla + chile serrano toreado.",
+    "price": 85,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 14 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hamburguesa_hawaiana",
+    "name": "Hamburguesa Hawaiana",
+    "description": "Doble carne + piña + jamón + jitomate + queso amarillo + lechuga + cebolla.",
+    "price": 85,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 14 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hamburguesa_champinones",
+    "name": "Hamburguesa de Champiñones",
+    "description": "Carne + champiñones + jitomate + lechuga + cebolla frita + chiles.",
+    "price": 75,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 20 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hamburguesa_especial_doble",
+    "name": "Hamburguesa Especial Doble",
+    "description": "Doble carne + Doble tocino + jitomate + Doble queso amarillo + lechuga + cebolla + Jalapeños.",
+    "price": 95,
+    "category": "hamburguesas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "papas",
+        "name": "¿Desea papas?",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Sin papas", "price": 0 },
+          { "name": "Con papas", "price": 15 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cajita_hamburguesa",
+    "name": "Cajita AntojaSorpresa Especial de Hamburguesa",
+    "description": "Carne + Queso amarillo + Mayonesa + Papas + Juguito. ¡INCLUYE REGALO SORPRESA!",
+    "price": 149,
+    "category": "kids",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "cajita_nuggets",
+    "name": "Cajita AntojaSorpresa Especial de Nuggets",
+    "description": "Nuggets + Papas + Juguito. ¡INCLUYE REGALO SORPRESA!",
+    "price": 149,
+    "category": "kids",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "dogo_clasico",
+    "name": "Dogo Clásico",
+    "description": "Salchicha + jitomate + cebolla + tocino + chiles.",
+    "price": 35,
+    "category": "dogos",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "dogo_triple",
+    "name": "Combo Triple Dogos (3 hotdogs)",
+    "description": "Salchicha + jitomate + cebolla + tocino + chiles.",
+    "price": 75,
+    "category": "dogos",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "alitas_sencilla_5",
+    "name": "Alitas Orden Sencilla (5 Pzas)",
+    "description": "5 deliciosas alitas preparadas con tu salsa favorita.",
+    "price": 80,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      },
+      {
+        "id": "adicionales",
+        "name": "Adicionales",
+        "type": "checkbox",
+        "required": false,
+        "options": [
+          { "name": "Dip Extra", "price": 18 },
+          { "name": "Orden de Papas Adicional", "price": 40 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_sencilla_8",
+    "name": "Alitas Orden Sencilla (8 Pzas)",
+    "description": "8 deliciosas alitas preparadas con tu salsa favorita.",
+    "price": 100,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      },
+      {
+        "id": "adicionales",
+        "name": "Adicionales",
+        "type": "checkbox",
+        "required": false,
+        "options": [
+          { "name": "Dip Extra", "price": 18 },
+          { "name": "Orden de Papas Adicional", "price": 40 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_sencilla_10",
+    "name": "Alitas Orden Sencilla (10 Pzas)",
+    "description": "10 deliciosas alitas preparadas con tu salsa favorita.",
+    "price": 135,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      },
+      {
+        "id": "adicionales",
+        "name": "Adicionales",
+        "type": "checkbox",
+        "required": false,
+        "options": [
+          { "name": "Dip Extra", "price": 18 },
+          { "name": "Orden de Papas Adicional", "price": 40 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_doble_15",
+    "name": "Alitas Orden Doble (15 Pzas)",
+    "description": "15 alitas ideales para 2 personas.",
+    "price": 170,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_doble_20",
+    "name": "Alitas Orden Doble (20 Pzas)",
+    "description": "20 alitas ideales para compartir.",
+    "price": 230,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor (Elige 1)",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_doble_25",
+    "name": "Alitas Orden Doble (25 Pzas)",
+    "description": "25 alitas para compartir en pareja o amigos.",
+    "price": 280,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "boneless_orden",
+    "name": "Boneless Orden (270g)",
+    "description": "De 8 a 12 piezas jugosas bañadas en tu salsa favorita.",
+    "price": 130,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      },
+      {
+        "id": "adicionales",
+        "name": "Adicionales",
+        "type": "checkbox",
+        "required": false,
+        "options": [
+          { "name": "Dip Extra", "price": 18 },
+          { "name": "Orden de Papas Adicional", "price": 40 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pack_mini_a",
+    "name": "MiniPackA",
+    "description": "12 Alitas + Papas a la francesa + Dip Ranch.",
+    "price": 185,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pack_mini_b",
+    "name": "MiniPackB",
+    "description": "12 Boneless + Papas a la francesa + Dip Ranch.",
+    "price": 234,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pack_bigpack",
+    "name": "BigPack",
+    "description": "12 Alitas + 12 Boneless + Papas francesa + Dip Ranch + 2 Catsup.",
+    "price": 294,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor_alitas",
+        "name": "Sabor Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 }
+        ]
+      },
+      {
+        "id": "sabor_boneless",
+        "name": "Sabor Boneless",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pack_bigpack_solo",
+    "name": "BigPack Solo Alitas o Boneless",
+    "description": "24 piezas de puro sabor (Elige si alitas o boneless).",
+    "price": 335,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "tipo",
+        "name": "Tipo",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Solo Alitas", "price": 0 },
+          { "name": "Solo Boneless", "price": 0 }
+        ]
+      },
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pack_pollitopack",
+    "name": "PollitoPack",
+    "description": "10 Alitas + 10 Boneless + 10 Nuggets + 10 Palomitas + Salchichas + Papas francesa + Dip Ranch + 2 Catsup.",
+    "price": 335,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "pack_mega",
+    "name": "Mega Pack",
+    "description": "20 Alitas + 20 Boneless + 6 Dedos de queso + 10 Nuggets + Papas francesa + 2 Dip Ranch + 2 Catsup.",
+    "price": 605,
+    "category": "paquetes",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "palomitas_pollo",
+    "name": "Palomitas de Pollo (25 pzas aprox.)",
+    "description": "25 palomitas crujientes con salsa dip.",
+    "price": 70,
+    "category": "botaneros",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "nuggets_papas",
+    "name": "Nuggets (6 pzas) + Papas sencillas",
+    "description": "6 piezas de nuggets acompañadas de papas.",
+    "price": 80,
+    "category": "botaneros",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "dedos_queso",
+    "name": "Dedos de queso (6 piezas)",
+    "description": "6 deliciosos deditos de queso mozzarella crujientes.",
+    "price": 80,
+    "category": "botaneros",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "salchichas_botaneras",
+    "name": "Salchichas (25 piezas)",
+    "description": "25 trozos de salchicha botanera.",
+    "price": 60,
+    "category": "botaneros",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "papas_sencillas",
+    "name": "Papas Sencillas (A la francesa)",
+    "description": "Porción individual de papas fritas saladas.",
+    "price": 60,
+    "category": "papas",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "salchipapas",
+    "name": "Salchipapas",
+    "description": "Papas sencillas mezcladas con salchicha frita.",
+    "price": 65,
+    "category": "papas",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "antoja_papa_especial",
+    "name": "Antoja-Papa Especial",
+    "description": "Papas + Palomitas + Salchicha.",
+    "price": 75,
+    "category": "papas",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "antoja_papa_boneless",
+    "name": "Antoja-Papa Boneless Especial",
+    "description": "Papas sencillas + 6 piezas de Boneless.",
+    "price": 95,
+    "category": "papas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa para Boneless",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "antoja_papa_alita",
+    "name": "Antoja-Papa Alita Especial",
+    "description": "Papas sencillas + 4 piezas de Alitas.",
+    "price": 95,
+    "category": "papas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa para Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "antoja_papa_pollito_mix",
+    "name": "Antoja-Papa Pollito Mix",
+    "description": "Papas sencillas + 3 Alitas + 4 Boneless.",
+    "price": 130,
+    "category": "papas",
+    "image": "",
+    "modifiers": []
+  },
+  {
+    "id": "combo_1",
+    "name": "Antojacombo #1 (1 Kilo)",
+    "description": "1 Kg de Alitas + 1 Kg de Papas + 2 Bebidas. Incluye 1 aderezo ranch + vegetales.",
+    "price": 299,
+    "category": "combos",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Sabor de Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "combo_2",
+    "name": "Antojacombo #2 (1 Kilo)",
+    "description": "1 Kg de Alitas + 1 Kg de Papas + 5 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales.",
+    "price": 359,
+    "category": "combos",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Sabor de Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "combo_3",
+    "name": "Antojacombo #3 (1.5 Kilo)",
+    "description": "1.5 Kg de Alitas + 1.5 Kg de Papas + 10 Nuggets. Incluye 1 aderezo ranch + vegetales.",
+    "price": 410,
+    "category": "combos",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Sabor de Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "combo_4",
+    "name": "Antojacombo #4 (2.5 Kilo)",
+    "description": "2.5 Kg de Alitas + 2.5 Kg de Papas + 10 pzas Nugget + 10 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales.",
+    "price": 825,
+    "category": "combos",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Sabor de Alitas",
+        "type": "select",
+        "required": true,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo", "price": 0 }
+        ]
+      }
+    ]
+  }
+];

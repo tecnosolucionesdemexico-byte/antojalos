@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antó-Jalos | Menú Digital</title>
+    <meta name="description" content="Disfruta del mejor sabor en Antó-Jalos. Tradición en cada bocado. Realiza tu pedido en línea y recíbelo por WhatsApp.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Announcement Bar / Business Hours Info -->
+    <div id="status-banner" class="status-banner open">
+        <span id="status-text"><i class="fa-solid fa-circle-check"></i> ¡Estamos abiertos! Haz tu pedido ahora.</span>
+    </div>
+
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="img/logo.jpg" alt="Antó-Jalos Logo" class="brand-logo" onerror="this.src='https://placehold.co/100x100/0b132b/ff5722?text=AJ';">
+            </div>
+            <div class="brand-info">
+                <h1>Antó-Jalos</h1>
+                <p class="tagline"><i class="fa-solid fa-utensils"></i> Tradición en cada bocado</p>
+                <div class="header-badges">
+                    <span class="badge"><i class="fa-solid fa-truck"></i> Envío a Domicilio</span>
+                    <span class="badge"><i class="fa-solid fa-store"></i> Para Recoger</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="menu-container">
+        <!-- Search & Filter Area -->
+        <section class="search-filter-section">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Buscar tu antojo favorito...">
+                <button id="clear-search" class="clear-search-btn" style="display: none;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="categories-nav-wrapper">
+                <div class="scroll-arrow scroll-left" id="scroll-left">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <nav class="categories-nav" id="categories-nav">
+                    <button class="category-btn active" data-category="all">
+                        <i class="fa-solid fa-border-all"></i> Todo
+                    </button>
+                    <button class="category-btn" data-category="hamburguesas">
+                        <i class="fa-solid fa-hamburger"></i> Burgers
+                    </button>
+                    <button class="category-btn" data-category="dogos">
+                        <i class="fa-solid fa-hotdog"></i> Dogos
+                    </button>
+                    <button class="category-btn" data-category="alitas">
+                        <i class="fa-solid fa-fire"></i> Alitas
+                    </button>
+                    <button class="category-btn" data-category="paquetes">
+                        <i class="fa-solid fa-box-archive"></i> Paquetes
+                    </button>
+                    <button class="category-btn" data-category="botaneros">
+                        <i class="fa-solid fa-drumstick-bite"></i> Botaneros
+                    </button>
+                    <button class="category-btn" data-category="papas">
+                        <i class="fa-solid fa-cheese"></i> Papas
+                    </button>
+                    <button class="category-btn" data-category="combos">
+                        <i class="fa-solid fa-cubes"></i> Combos
+                    </button>
+                    <button class="category-btn" data-category="kids">
+                        <i class="fa-solid fa-child"></i> Kids
+                    </button>
+                </nav>
+                <div class="scroll-arrow scroll-right" id="scroll-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section class="menu-products">
+            <h2 id="category-title" class="section-title">Todos los Productos</h2>
+            
+            <!-- Loading Indicator -->
+            <div id="loading-spinner" class="loading-container">
+                <div class="spinner"></div>
+                <p>Cargando el menú de hoy...</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="products-grid" style="display: none;">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- No Results -->
+            <div id="no-results" class="no-results-container" style="display: none;">
+                <i class="fa-solid fa-face-frown no-results-icon"></i>
+                <h3>No encontramos lo que buscas</h3>
+                <p>Intenta con otra palabra o explora las categorías.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Cart Button -->
+    <button id="floating-cart" class="floating-cart-btn" aria-label="Ver Carrito">
+        <span class="cart-icon-wrapper">
+            <i class="fa-solid fa-shopping-basket"></i>
+            <span id="cart-badge" class="cart-badge">0</span>
+        </span>
+        <span class="cart-btn-text">Ver Pedido</span>
+        <span id="cart-btn-total" class="cart-btn-total">$0.00</span>
+    </button>
+
+    <!-- Cart Drawer / Sidebar -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="drawer-backdrop" id="drawer-backdrop"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3><i class="fa-solid fa-shopping-basket"></i> Tu Pedido</h3>
+                <button id="close-drawer" class="close-drawer-btn" aria-label="Cerrar Carrito">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="drawer-body">
+                <!-- Cart Items List -->
+                <div id="cart-items" class="cart-items-list">
+                    <!-- Dynamically populated -->
+                </div>
+                
+                <!-- Empty Cart Message -->
+                <div id="empty-cart" class="empty-cart-msg">
+                    <i class="fa-solid fa-basket-shopping-minus icon"></i>
+                    <p>Tu carrito está vacío</p>
+                    <span>¡Agrega algunos de nuestros deliciosos antojitos!</span>
+                </div>
+
+                <!-- Checkout Form -->
+                <form id="checkout-form" class="checkout-form" style="display: none;">
+                    <h4>Datos para tu pedido</h4>
+                    
+                    <div class="form-group">
+                        <label for="customer-name">Nombre Completo *</label>
+                        <input type="text" id="customer-name" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Método de Entrega *</label>
+                        <div class="delivery-options">
+                            <label class="delivery-radio active">
+                                <input type="radio" name="delivery-type" value="domicilio" checked>
+                                <i class="fa-solid fa-motorcycle"></i>
+                                <span>A Domicilio</span>
+                            </label>
+                            <label class="delivery-radio">
+                                <input type="radio" name="delivery-type" value="sucursal">
+                                <i class="fa-solid fa-store"></i>
+                                <span>Para Recoger</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="address-group">
+                        <label for="customer-address">Dirección de Envío *</label>
+                        <textarea id="customer-address" required placeholder="Calle, número, colonia y referencias..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment-method">Método de Pago *</label>
+                        <select id="payment-method" required>
+                            <option value="Efectivo" selected>Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Tarjeta">Tarjeta (Terminal al entregar)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="cash-change-group">
+                        <label for="cash-change">¿Con cuánto vas a pagar? (Opcional)</label>
+                        <input type="number" id="cash-change" placeholder="Ej. 200, 500 (para llevar cambio)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order-notes">Notas / Instrucciones especiales (Opcional)</label>
+                        <textarea id="order-notes" placeholder="Ej. Sin cebolla, aderezo aparte, etc."></textarea>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="drawer-footer" id="drawer-footer" style="display: none;">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row" id="delivery-cost-row">
+                    <span>Envío:</span>
+                    <span id="summary-delivery" class="text-accent">Por cotizar</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total estimado:</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+                
+                <button type="submit" form="checkout-form" id="send-whatsapp-btn" class="send-order-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Enviar Pedido por WhatsApp
+                </button>
+                <div id="closed-notice" class="closed-notice" style="display: none;">
+                    <i class="fa-solid fa-lock"></i> El negocio se encuentra cerrado temporalmente. No se pueden procesar pedidos.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Customization Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="close-modal" class="close-modal-btn" aria-label="Cerrar modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body">
+                <div class="modal-product-header">
+                    <div class="modal-product-img-wrapper">
+                        <img id="modal-product-img" src="" alt="" onerror="this.style.display='none';">
+                    </div>
+                    <div class="modal-product-info">
+                        <h3 id="modal-product-name"></h3>
+                        <p id="modal-product-desc"></p>
+                        <span id="modal-product-price" class="modal-price"></span>
+                    </div>
+                </div>
+                
+                <!-- Dynamic Options Form -->
+                <form id="customization-form" class="customization-options">
+                    <!-- Loaded dynamically -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="quantity-selector">
+                    <button type="button" class="qty-btn minus" id="modal-qty-minus"><i class="fa-solid fa-minus"></i></button>
+                    <span id="modal-qty" class="qty-val">1</span>
+                    <button type="button" class="qty-btn plus" id="modal-qty-plus"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <button type="submit" form="customization-form" class="add-to-cart-action-btn">
+                    <span>Agregar al pedido</span>
+                    <span id="modal-total-price">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Antó-Jalos. Todos los derechos reservados.</p>
+            <p class="credits">Tradición en cada bocado.</p>
+            <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-lock"></i> Panel Administrador</a>
+        </div>
+    </footer>
+
+    <!-- JS Files -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

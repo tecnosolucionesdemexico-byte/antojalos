@@ -1,0 +1,19 @@
+{
+  "businessName": "Antó-Jalos",
+  "whatsappPhone": "524741342246",
+  "adminPasswordHash": "79b1d9e3285664c318128899d048be76f6db1998f045d325c80c023707b30761",
+  "deliveryCost": "cotizar",
+  "currency": "MXN",
+  "schedule": {
+    "alwaysOpen": true,
+    "days": {
+      "monday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "tuesday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "wednesday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "thursday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "friday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "saturday": { "enabled": true, "start": "18:00", "end": "23:30" },
+      "sunday": { "enabled": true, "start": "18:00", "end": "23:30" }
+    }
+  }
+}
