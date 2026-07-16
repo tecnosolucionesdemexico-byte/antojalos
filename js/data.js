@@ -2,7 +2,7 @@
 const DEFAULT_CONFIG = {
   "businessName": "Antó-Jalos",
   "whatsappPhone": "524741342246",
-  "deliveryCost": "cotizar",
+  "deliveryCost": 30,
   "currency": "MXN",
   "schedule": {
     "alwaysOpen": true,
@@ -178,16 +178,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_sencilla_5",
     "name": "Alitas Orden Sencilla (5 Pzas)",
-    "description": "5 deliciosas alitas preparadas con tu salsa favorita.",
+    "description": "5 deliciosas alitas preparadas con 1 salsa.",
     "price": 80,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
+        "name": "Salsa / Sabor (Elige 1)",
         "type": "select",
         "required": true,
+        "max_choices": 1,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -223,16 +224,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_sencilla_8",
     "name": "Alitas Orden Sencilla (8 Pzas)",
-    "description": "8 deliciosas alitas preparadas con tu salsa favorita.",
+    "description": "8 deliciosas alitas preparadas (Puedes elegir hasta 2 sabores).",
     "price": 100,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -268,16 +270,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_sencilla_10",
     "name": "Alitas Orden Sencilla (10 Pzas)",
-    "description": "10 deliciosas alitas preparadas con tu salsa favorita.",
+    "description": "10 deliciosas alitas preparadas (Puedes elegir hasta 2 sabores).",
     "price": 135,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -313,16 +316,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_doble_15",
     "name": "Alitas Orden Doble (15 Pzas)",
-    "description": "15 alitas ideales para 2 personas.",
+    "description": "15 alitas ideales para 2 personas (Puedes elegir hasta 3 sabores).",
     "price": 170,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -348,16 +352,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_doble_20",
     "name": "Alitas Orden Doble (20 Pzas)",
-    "description": "20 alitas ideales para compartir.",
+    "description": "20 alitas ideales para compartir (Puedes elegir hasta 3 sabores).",
     "price": 230,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor (Elige 1)",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -383,16 +388,125 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "alitas_doble_25",
     "name": "Alitas Orden Doble (25 Pzas)",
-    "description": "25 alitas para compartir en pareja o amigos.",
+    "description": "25 alitas para compartir en pareja o amigos (Puedes elegir hasta 3 sabores).",
     "price": 280,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_familiar_30",
+    "name": "Alitas Orden Familiar (30 Pzas)",
+    "description": "30 alitas para toda la familia o amigos (Puedes elegir hasta 3 sabores).",
+    "price": 325,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor (Elige hasta 3)",
+        "type": "checkbox",
+        "required": true,
+        "max_choices": 3,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_familiar_40",
+    "name": "Alitas Orden Familiar (40 Pzas)",
+    "description": "40 deliciosas alitas para compartir en grande (Puedes elegir hasta 4 sabores).",
+    "price": 420,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor (Elige hasta 4)",
+        "type": "checkbox",
+        "required": true,
+        "max_choices": 4,
+        "options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "alitas_familiar_50",
+    "name": "Alitas Orden Familiar (50 Pzas)",
+    "description": "50 espectaculares alitas para saciar el hambre (Puedes elegir hasta 4 sabores).",
+    "price": 530,
+    "category": "alitas",
+    "image": "",
+    "modifiers": [
+      {
+        "id": "sabor",
+        "name": "Salsa / Sabor (Elige hasta 4)",
+        "type": "checkbox",
+        "required": true,
+        "max_choices": 4,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -418,16 +532,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "boneless_orden",
     "name": "Boneless Orden (270g)",
-    "description": "De 8 a 12 piezas jugosas bañadas en tu salsa favorita.",
+    "description": "De 8 a 12 piezas jugosas bañadas en tu salsa favorita (Elige hasta 2 sabores).",
     "price": 130,
     "category": "alitas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -463,16 +578,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "pack_mini_a",
     "name": "MiniPackA",
-    "description": "12 Alitas + Papas a la francesa + Dip Ranch.",
+    "description": "12 Alitas + Papas a la francesa + Dip Ranch (Puedes elegir hasta 2 sabores).",
     "price": 185,
     "category": "paquetes",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -498,16 +614,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "pack_mini_b",
     "name": "MiniPackB",
-    "description": "12 Boneless + Papas a la francesa + Dip Ranch.",
+    "description": "12 Boneless + Papas a la francesa + Dip Ranch (Puedes elegir hasta 2 sabores).",
     "price": 234,
     "category": "paquetes",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -533,7 +650,7 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "pack_bigpack",
     "name": "BigPack",
-    "description": "12 Alitas + 12 Boneless + Papas francesa + Dip Ranch + 2 Catsup.",
+    "description": "12 Alitas + 12 Boneless + Papas francesa + Dip Ranch + 2 Catsup (Elige sabor de cada uno).",
     "price": 294,
     "category": "paquetes",
     "image": "",
@@ -543,6 +660,7 @@ const DEFAULT_MENU_ITEMS = [
         "name": "Sabor Alitas",
         "type": "select",
         "required": true,
+        "max_choices": 1,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -556,6 +674,7 @@ const DEFAULT_MENU_ITEMS = [
         "name": "Sabor Boneless",
         "type": "select",
         "required": true,
+        "max_choices": 1,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -569,7 +688,7 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "pack_bigpack_solo",
     "name": "BigPack Solo Alitas o Boneless",
-    "description": "24 piezas de puro sabor (Elige si alitas o boneless).",
+    "description": "24 piezas de puro sabor (Puedes elegir hasta 3 sabores).",
     "price": 335,
     "category": "paquetes",
     "image": "",
@@ -579,6 +698,7 @@ const DEFAULT_MENU_ITEMS = [
         "name": "Tipo",
         "type": "select",
         "required": true,
+        "max_choices": 1,
         "options": [
           { "name": "Solo Alitas", "price": 0 },
           { "name": "Solo Boneless", "price": 0 }
@@ -586,9 +706,10 @@ const DEFAULT_MENU_ITEMS = [
       },
       {
         "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
+        "name": "Salsa / Sabor (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -683,16 +804,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "antoja_papa_boneless",
     "name": "Antoja-Papa Boneless Especial",
-    "description": "Papas sencillas + 6 piezas de Boneless.",
+    "description": "Papas sencillas + 6 piezas de Boneless (Elige hasta 2 sabores).",
     "price": 95,
     "category": "papas",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Salsa para Boneless",
-        "type": "select",
+        "name": "Salsa para Boneless (Elige hasta 2)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 2,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -716,6 +838,7 @@ const DEFAULT_MENU_ITEMS = [
         "name": "Salsa para Alitas",
         "type": "select",
         "required": true,
+        "max_choices": 1,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -738,16 +861,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "combo_1",
     "name": "Antojacombo #1 (1 Kilo)",
-    "description": "1 Kg de Alitas + 1 Kg de Papas + 2 Bebidas. Incluye 1 aderezo ranch + vegetales.",
+    "description": "1 Kg de Alitas + 1 Kg de Papas + 2 Bebidas. Incluye 1 aderezo ranch + vegetales (Elige hasta 3 sabores).",
     "price": 299,
     "category": "combos",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Sabor de Alitas",
-        "type": "select",
+        "name": "Sabor de Alitas (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -761,16 +885,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "combo_2",
     "name": "Antojacombo #2 (1 Kilo)",
-    "description": "1 Kg de Alitas + 1 Kg de Papas + 5 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales.",
+    "description": "1 Kg de Alitas + 1 Kg de Papas + 5 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales (Elige hasta 3 sabores).",
     "price": 359,
     "category": "combos",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Sabor de Alitas",
-        "type": "select",
+        "name": "Sabor de Alitas (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -784,16 +909,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "combo_3",
     "name": "Antojacombo #3 (1.5 Kilo)",
-    "description": "1.5 Kg de Alitas + 1.5 Kg de Papas + 10 Nuggets. Incluye 1 aderezo ranch + vegetales.",
+    "description": "1.5 Kg de Alitas + 1.5 Kg de Papas + 10 Nuggets. Incluye 1 aderezo ranch + vegetales (Elige hasta 3 sabores).",
     "price": 410,
     "category": "combos",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Sabor de Alitas",
-        "type": "select",
+        "name": "Sabor de Alitas (Elige hasta 3)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 3,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
@@ -807,16 +933,17 @@ const DEFAULT_MENU_ITEMS = [
   {
     "id": "combo_4",
     "name": "Antojacombo #4 (2.5 Kilo)",
-    "description": "2.5 Kg de Alitas + 2.5 Kg de Papas + 10 pzas Nugget + 10 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales.",
+    "description": "2.5 Kg de Alitas + 2.5 Kg de Papas + 10 pzas Nugget + 10 pzas Dedos de Queso. Incluye 1 aderezo ranch + vegetales (Elige hasta 4 sabores).",
     "price": 825,
     "category": "combos",
     "image": "",
     "modifiers": [
       {
         "id": "sabor",
-        "name": "Sabor de Alitas",
-        "type": "select",
+        "name": "Sabor de Alitas (Elige hasta 4)",
+        "type": "checkbox",
         "required": true,
+        "max_choices": 4,
         "options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },

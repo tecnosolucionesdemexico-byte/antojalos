@@ -315,24 +315,41 @@ function openCustomizationModal(product) {
             
             const optionsList = groupDiv.querySelector('.options-list');
             
+            // Add custom instructions or limits label if checkbox group with multiple choices limit
+            const isCheckbox = group.type === 'checkbox' || (group.max_choices && group.max_choices > 1);
+            if (isCheckbox && group.max_choices) {
+                const limitLabel = document.createElement('div');
+                limitLabel.className = 'group-limit-info';
+                limitLabel.style.fontSize = '0.8rem';
+                limitLabel.style.color = 'var(--accent-hover)';
+                limitLabel.style.marginTop = '-8px';
+                limitLabel.style.marginBottom = '12px';
+                limitLabel.innerHTML = `<i class="fa-solid fa-info-circle"></i> Puedes seleccionar hasta <strong>${group.max_choices}</strong> opciones`;
+                groupDiv.querySelector('.option-group-title').after(limitLabel);
+            }
+            
             group.options.forEach((opt, optIdx) => {
                 const optLabel = document.createElement('label');
                 optLabel.className = 'custom-option';
                 
-                const isSelectedByDefault = optIdx === 0 && group.required;
+                // For checkboxes, we don't check by default, for radio we check the first option if required
+                const isSelectedByDefault = !isCheckbox && optIdx === 0 && group.required;
                 const priceText = opt.price > 0 ? `+$${parseFloat(opt.price).toFixed(2)}` : 'Gratis';
+                
+                // Native required only for radio buttons (not checkbox groups because that forces checking all)
+                const isNativeRequired = !isCheckbox && group.required;
                 
                 optLabel.innerHTML = `
                     <div class="option-input-wrapper">
                         <input 
-                            type="${group.type === 'select' ? 'radio' : 'checkbox'}" 
+                            type="${isCheckbox ? 'checkbox' : 'radio'}" 
                             name="mod_${group.id}" 
                             value="${opt.name}"
                             data-price="${opt.price}"
                             data-group-id="${group.id}"
                             data-group-name="${group.name}"
                             ${isSelectedByDefault ? 'checked' : ''}
-                            ${group.required ? 'required' : ''}
+                            ${isNativeRequired ? 'required' : ''}
                         >
                         <span class="option-name">${opt.name}</span>
                     </div>
@@ -344,6 +361,37 @@ function openCustomizationModal(product) {
                 
                 optionsList.appendChild(optLabel);
             });
+            
+            // Checkbox limit logic
+            if (isCheckbox && group.max_choices) {
+                const updateCheckboxLimits = () => {
+                    const checkedCount = optionsList.querySelectorAll('input[type="checkbox"]:checked').length;
+                    const allCheckboxes = optionsList.querySelectorAll('input[type="checkbox"]');
+                    
+                    if (checkedCount >= group.max_choices) {
+                        allCheckboxes.forEach(cb => {
+                            if (!cb.checked) {
+                                cb.disabled = true;
+                                cb.closest('.custom-option').style.opacity = '0.4';
+                            }
+                        });
+                    } else {
+                        allCheckboxes.forEach(cb => {
+                            cb.disabled = false;
+                            cb.closest('.custom-option').style.opacity = '1';
+                        });
+                    }
+                };
+                
+                optionsList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        updateCheckboxLimits();
+                    });
+                });
+                
+                // Initialize limits
+                updateCheckboxLimits();
+            }
             
             customizationForm.appendChild(groupDiv);
         });
@@ -408,6 +456,24 @@ customizationForm.addEventListener('submit', (e) => {
             price: optPrice
         });
     });
+    
+    // Manual validation of required checkbox groups (since native required doesn't work for multiple choice checkboxes)
+    let isValid = true;
+    if (selectedProduct.modifiers && selectedProduct.modifiers.length > 0) {
+        selectedProduct.modifiers.forEach(group => {
+            if (group.required) {
+                const isCheckbox = group.type === 'checkbox' || (group.max_choices && group.max_choices > 1);
+                if (isCheckbox) {
+                    if (!selectedOptions[group.id] || selectedOptions[group.id].selections.length === 0) {
+                        alert(`Por favor, selecciona al menos una opción para: ${group.name}`);
+                        isValid = false;
+                    }
+                }
+            }
+        });
+    }
+    
+    if (!isValid) return;
     
     // Add to Cart
     addToCart(selectedProduct, currentModalQty, selectedOptions);

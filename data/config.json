@@ -2,7 +2,7 @@
   "businessName": "Antó-Jalos",
   "whatsappPhone": "524741342246",
   "adminPasswordHash": "79b1d9e3285664c318128899d048be76f6db1998f045d325c80c023707b30761",
-  "deliveryCost": "cotizar",
+  "deliveryCost": 30,
   "currency": "MXN",
   "schedule": {
     "alwaysOpen": true,

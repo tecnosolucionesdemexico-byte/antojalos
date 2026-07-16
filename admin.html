@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Antó-Jalos</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="login-container" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="img/logo.jpg" alt="Logo" class="login-logo" onerror="this.src='https://placehold.co/100x100/0b132b/ff5722?text=AJ';">
+                <h2>Panel Administrador</h2>
+                <p>Ingresa la contraseña para realizar cambios en el menú</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-password">Contraseña</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="admin-password" placeholder="••••••••" required>
+                        <button type="button" id="toggle-password" class="toggle-password-btn">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="admin-btn-primary login-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+                </button>
+            </form>
+            <div id="login-error" class="login-error-msg" style="display: none;">
+                <i class="fa-solid fa-triangle-exclamation"></i> Contraseña incorrecta
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. ADMIN DASHBOARD (Hidden by default) -->
+    <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+        <!-- Top Nav Bar -->
+        <header class="admin-header">
+            <div class="admin-header-container">
+                <div class="admin-brand">
+                    <img src="img/logo.jpg" alt="Logo" class="admin-logo-sm" onerror="this.src='https://placehold.co/50x50/0b132b/ff5722?text=AJ';">
+                    <div>
+                        <h1>Antó-Jalos</h1>
+                        <span>Panel de Administración</span>
+                    </div>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="export-db-btn" class="admin-btn-secondary" title="Descargar archivos JSON de datos">
+                        <i class="fa-solid fa-download"></i> Respaldar Datos
+                    </button>
+                    <button id="logout-btn" class="admin-btn-danger">
+                        <i class="fa-solid fa-right-from-bracket"></i> Salir
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <div class="admin-workspace">
+            <!-- Sidebar Navigation -->
+            <aside class="admin-sidebar">
+                <nav class="sidebar-nav">
+                    <button class="sidebar-tab active" data-tab="products">
+                        <i class="fa-solid fa-hamburger"></i> Productos
+                    </button>
+                    <button class="sidebar-tab" data-tab="categories">
+                        <i class="fa-solid fa-folder-open"></i> Categorías
+                    </button>
+                    <button class="sidebar-tab" data-tab="config">
+                        <i class="fa-solid fa-gears"></i> Ajustes del Negocio
+                    </button>
+                </nav>
+                <div class="sidebar-footer">
+                    <div id="storage-mode-badge" class="badge badge-storage">
+                        <i class="fa-solid fa-server"></i> Conectado al Servidor
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Dashboard Content Areas -->
+            <main class="admin-content">
+                
+                <!-- TAB 1: PRODUCTS LIST -->
+                <section id="tab-products" class="tab-panel active">
+                    <div class="panel-header">
+                        <h2>Gestión de Productos</h2>
+                        <button id="add-product-btn" class="admin-btn-primary">
+                            <i class="fa-solid fa-plus"></i> Nuevo Producto
+                        </button>
+                    </div>
+
+                    <!-- Search and filters -->
+                    <div class="panel-filters">
+                        <div class="search-bar">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="admin-product-search" placeholder="Filtrar por nombre...">
+                        </div>
+                        <select id="admin-category-filter">
+                            <option value="all">Todas las categorías</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <!-- Products Table -->
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Modificadores</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- TAB 2: CATEGORIES LIST -->
+                <section id="tab-categories" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Gestión de Categorías</h2>
+                        <button id="add-category-btn" class="admin-btn-primary">
+                            <i class="fa-solid fa-plus"></i> Nueva Categoría
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre de Categoría</th>
+                                    <th>Ícono FontAwesome</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-categories-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- TAB 3: CONFIGURATION SETTINGS -->
+                <section id="tab-config" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Ajustes y Horarios del Negocio</h2>
+                    </div>
+
+                    <form id="config-form" class="config-grid-form">
+                        <div class="config-card">
+                            <h3><i class="fa-solid fa-store"></i> Información Básica</h3>
+                            
+                            <div class="form-group">
+                                <label for="config-business-name">Nombre del Negocio</label>
+                                <input type="text" id="config-business-name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="config-phone">WhatsApp para Pedidos (Código país + Número)</label>
+                                <input type="text" id="config-phone" required placeholder="Ej: 524741342246">
+                                <small class="form-help">Debe incluir la clave de país (México es 52) sin espacios ni símbolos (+).</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="config-delivery-cost">Costo de Envío a Domicilio ($)</label>
+                                <input type="number" id="config-delivery-cost" required min="0" step="0.5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="config-new-password">Cambiar Contraseña del Panel</label>
+                                <input type="password" id="config-new-password" placeholder="Dejar en blanco para no cambiar">
+                            </div>
+                        </div>
+
+                        <div class="config-card">
+                            <h3><i class="fa-solid fa-clock"></i> Horario de Atención</h3>
+                            
+                            <div class="always-open-toggle">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="config-always-open">
+                                    <span class="checkmark"></span>
+                                    <strong>Siempre Abierto (24/7 sin restricciones de horario)</strong>
+                                </label>
+                            </div>
+
+                            <div id="weekly-hours-container" class="weekly-hours-container">
+                                <!-- Monday -->
+                                <div class="day-hour-row" data-day="monday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Lunes
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Tuesday -->
+                                <div class="day-hour-row" data-day="tuesday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Martes
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Wednesday -->
+                                <div class="day-hour-row" data-day="wednesday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Miércoles
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Thursday -->
+                                <div class="day-hour-row" data-day="thursday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Jueves
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Friday -->
+                                <div class="day-hour-row" data-day="friday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Viernes
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Saturday -->
+                                <div class="day-hour-row" data-day="saturday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Sábado
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                                <!-- Sunday -->
+                                <div class="day-hour-row" data-day="sunday">
+                                    <label class="checkbox-container day-check">
+                                        <input type="checkbox" class="day-enable">
+                                        <span class="checkmark"></span>
+                                        Domingo
+                                    </label>
+                                    <div class="hour-inputs">
+                                        <input type="time" class="time-start">
+                                        <span>a</span>
+                                        <input type="time" class="time-end">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-submit-bar">
+                            <button type="submit" class="admin-btn-primary save-config-btn">
+                                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- 3. MODAL FOR EDITING/CREATING PRODUCT -->
+    <div id="product-edit-modal" class="modal">
+        <div class="modal-backdrop" id="product-edit-modal-backdrop"></div>
+        <div class="modal-content admin-modal-content">
+            <button id="close-product-edit-modal" class="close-modal-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body">
+                <h3 id="product-modal-title">Editar Producto</h3>
+                
+                <form id="product-edit-form" class="product-edit-form">
+                    <input type="hidden" id="edit-product-id">
+                    
+                    <div class="form-group">
+                        <label for="edit-product-name">Nombre del Producto</label>
+                        <input type="text" id="edit-product-name" required>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="edit-product-category">Categoría</label>
+                            <select id="edit-product-category" required>
+                                <!-- Categories populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-product-price">Precio base ($)</label>
+                            <input type="number" id="edit-product-price" required min="0" step="0.5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-description">Ingredientes / Descripción</label>
+                        <textarea id="edit-product-description" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Image manager -->
+                    <div class="form-group">
+                        <label>Imagen del Producto</label>
+                        <div class="image-upload-wrapper">
+                            <div class="image-preview-container">
+                                <img id="edit-image-preview" src="" alt="Vista previa" onerror="this.src='https://placehold.co/120x90/0b132b/ff5722?text=Sin+Imagen';">
+                            </div>
+                            <div class="image-upload-inputs">
+                                <div class="file-upload-btn-wrapper">
+                                    <button type="button" class="admin-btn-secondary"><i class="fa-solid fa-upload"></i> Subir Archivo</button>
+                                    <input type="file" id="edit-product-image-file" accept="image/*">
+                                </div>
+                                <div class="or-separator">o ingresa una URL:</div>
+                                <input type="text" id="edit-product-image-url" placeholder="https://ejemplo.com/imagen.jpg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modifiers List Editor -->
+                    <div class="form-group border-top-group">
+                        <div class="modifiers-header">
+                            <label>Modificadores del Producto</label>
+                            <button type="button" id="add-modifier-group-btn" class="admin-btn-secondary btn-sm">
+                                <i class="fa-solid fa-plus-circle"></i> Agregar Grupo de Modificador
+                            </button>
+                        </div>
+                        <div id="product-modifiers-editor-list" class="product-modifiers-editor-list">
+                            <!-- Populated dynamically with modifier editors -->
+                        </div>
+                    </div>
+
+                    <div class="modal-action-buttons">
+                        <button type="button" id="cancel-product-edit-btn" class="admin-btn-secondary">Cancelar</button>
+                        <button type="submit" class="admin-btn-primary"><i class="fa-solid fa-circle-check"></i> Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL FOR EDITING/CREATING CATEGORY -->
+    <div id="category-edit-modal" class="modal">
+        <div class="modal-backdrop" id="category-edit-modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="close-category-edit-modal" class="close-modal-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body">
+                <h3 id="category-modal-title">Editar Categoría</h3>
+                
+                <form id="category-edit-form">
+                    <input type="hidden" id="edit-category-key">
+                    
+                    <div class="form-group">
+                        <label for="edit-category-name">Nombre de la Categoría</label>
+                        <input type="text" id="edit-category-name" required placeholder="Ej: Hamburguesas">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-category-icon">Ícono FontAwesome</label>
+                        <input type="text" id="edit-category-icon" required placeholder="Ej: fa-hamburger">
+                        <small class="form-help">Puedes buscar códigos de íconos en FontAwesome (ej. fa-hotdog, fa-fire, fa-pizza-slice)</small>
+                    </div>
+
+                    <div class="modal-action-buttons">
+                        <button type="button" id="cancel-category-edit-btn" class="admin-btn-secondary">Cancelar</button>
+                        <button type="submit" class="admin-btn-primary">Guardar Categoría</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="admin-toast" class="admin-toast">
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <span id="toast-message">Cambios guardados con éxito</span>
+    </div>
+
+    <!-- JS Files -->
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
