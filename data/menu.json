@@ -207,13 +207,13 @@
     "price": 100,
     "category": "alitas",
     "image": "",
-    "modifiers": [
-      {
-        "id": "sabor",
-        "name": "Salsa / Sabor",
-        "type": "select",
-        "required": true,
-        "options": [
+    "modifiers":[
+{
+"id":"sabor1",
+"name":"Primer sabor",
+"type":"select",
+"required":true,
+"options": [
           { "name": "Habanero", "price": 0 },
           { "name": "Mango habanero", "price": 0 },
           { "name": "Habanero cremoso", "price": 0 },
@@ -231,6 +231,32 @@
           { "name": "BBQ", "price": 0 },
           { "name": "Mezcal", "price": 0 },
           { "name": "Cheddar", "price": 0 }
+},
+{
+"id":"sabor2",
+"name":"Segundo sabor",
+"type":"select",
+"required":true,
+"options": [
+          { "name": "Habanero", "price": 0 },
+          { "name": "Mango habanero", "price": 0 },
+          { "name": "Habanero cremoso", "price": 0 },
+          { "name": "Búfalo", "price": 0 },
+          { "name": "Tamarindo habanero", "price": 0 },
+          { "name": "BBQ Habanero", "price": 0 },
+          { "name": "Naranja Chipotle", "price": 0 },
+          { "name": "Cheddar picoso", "price": 0 },
+          { "name": "Jalapeño", "price": 0 },
+          { "name": "Taquis fuego", "price": 0 },
+          { "name": "Papas Adobadas", "price": 0 },
+          { "name": "Lemon pepper", "price": 0 },
+          { "name": "BBQ Chipotle", "price": 0 },
+          { "name": "Tamarindo", "price": 0 },
+          { "name": "BBQ", "price": 0 },
+          { "name": "Mezcal", "price": 0 },
+          { "name": "Cheddar", "price": 0 }
+}
+]
         ]
       },
       {
